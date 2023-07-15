@@ -21,9 +21,10 @@ Create the `.vscode/launch.json` file to provide debug config and env variables
             "mode": "auto",
             "program": "${workspaceFolder}/cmd",
             "env": {
-                "REQUESTS_TIME": "1",
-                "TIMEOUT": "60",
-                "CURRENCIES_HOST": "http://localhost:3000",
+                "REQUESTS_TIME": "480",
+                "TIMEOUT": "30",
+                "CURRENCIES_HOST": "https://api.currencyapi.com/v3/latest",
+                "API_KEY": "******",
             }
         }
     ]

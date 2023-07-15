@@ -6,6 +6,7 @@ type config struct {
 	RequestsTime   int    `env:"REQUESTS_TIME,required"`
 	Timeout        int    `env:"TIMEOUT,required"`
 	CurrenciesHost string `env:"CURRENCIES_HOST,required"`
+	ApiKey         string `env:"API_KEY,required"`
 }
 
 var Get config
