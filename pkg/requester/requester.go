@@ -3,6 +3,7 @@ package requester
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -19,10 +20,13 @@ type response struct {
 		Code  string  `json:"code"`
 		Value float64 `json:"value"`
 	} `json:"data"`
-	Id string
 }
 
 func Start(ctx context.Context) {
+	projectId := "4ugjhdsfb"
+
+	fmt.Println(projectId)
+
 	c := &http.Client{
 		Timeout: time.Second * time.Duration(config.Get.Timeout),
 	}
