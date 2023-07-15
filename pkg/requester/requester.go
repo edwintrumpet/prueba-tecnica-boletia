@@ -1,6 +1,7 @@
 package requester
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"log"
@@ -20,7 +21,7 @@ type response struct {
 	} `json:"data"`
 }
 
-func Start() {
+func Start(ctx context.Context) {
 	c := &http.Client{
 		Timeout: time.Second * time.Duration(config.Get.Timeout),
 	}
@@ -32,6 +33,9 @@ func Start() {
 	}
 
 	req.Header.Set("apikey", config.Get.ApiKey)
+
+	ticker := time.NewTicker(time.Minute * time.Duration(config.Get.RequestsTime))
+	defer ticker.Stop()
 
 	for {
 		go func() {
@@ -67,6 +71,10 @@ func Start() {
 
 		}()
 
-		time.Sleep(time.Minute * time.Duration(config.Get.RequestsTime))
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+		}
 	}
 }

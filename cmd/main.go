@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/edwintrumpet/prueba-tecnica-boletia/config"
@@ -12,5 +13,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	requester.Start()
+	requester.Start(context.Background())
 }
