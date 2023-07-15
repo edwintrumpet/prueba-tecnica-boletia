@@ -23,10 +23,9 @@ type response struct {
 }
 
 func Start(ctx context.Context) {
-	a := 1
-	a = 2
+	projectId := "sfmdjghsjhdfg"
 
-	fmt.Println(a)
+	fmt.Println(projectId)
 
 	c := &http.Client{
 		Timeout: time.Second * time.Duration(config.Get.Timeout),
