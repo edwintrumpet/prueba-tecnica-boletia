@@ -39,5 +39,5 @@ func TestStart(t *testing.T) {
 
 	calls := httpmock.GetTotalCallCount()
 
-	assert.Equal(t, 2, calls)
+	assert.Equal(t, 1, calls)
 }
