@@ -19,6 +19,7 @@ type response struct {
 		Code  string  `json:"code"`
 		Value float64 `json:"value"`
 	} `json:"data"`
+	Id string
 }
 
 func Start(ctx context.Context) {
