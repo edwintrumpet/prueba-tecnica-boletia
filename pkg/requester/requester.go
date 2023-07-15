@@ -62,7 +62,7 @@ func Start() {
 			// TODO parse into a struct
 			// TODO save in db
 
-			log.Println("response", res)
+			log.Println("response", res.Data["USD"])
 			log.Println("response time", responseTime)
 
 		}()
