@@ -32,3 +32,26 @@ Create the `.vscode/launch.json` file to provide debug config and env variables
 ```
 
 To run press **`F5`** or use the debug icon on Visual Studio Code
+
+### Run using Docker
+
+Create the `.env` file to provide env variables
+
+```
+REQUESTS_TIME=480
+TIMEOUT=30
+CURRENCIES_HOST=https://api.currencyapi.com/v3/latest
+API_KEY=******
+```
+
+Run
+
+```bash
+docker-compose up -d --build app
+```
+
+Watch app logs
+
+```bash
+docker-compose logs -f app
+```
