@@ -31,6 +31,9 @@ jobs:
       CURRENCIES_HOST: ${{ vars.CURRENCIES_HOST }}
       SSH_KEY: ${{ secrets.SSH_KEY }}
       API_KEY: ${{ secrets.API_KEY }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
     steps:
     - name: set ssh key
       run: |
@@ -40,4 +43,4 @@ jobs:
           ssh-keyscan -t rsa $HOST >> ~/.ssh/known_hosts
     - name: deploy
       run: |
-          ssh -i ~/.ssh/key.pem $DEPLOY_USER@$HOST "cd ~/app && VERSION=${GITHUB_REF_NAME:1} REQUESTS_TIME=$REQUESTS_TIME TIMEOUT=$TIMEOUT CURRENCIES_HOST=$CURRENCIES_HOST API_KEY=$API_KEY docker compose up -d --build app"
+          ssh -i ~/.ssh/key.pem $DEPLOY_USER@$HOST "cd ~/app && VERSION=${GITHUB_REF_NAME:1} REQUESTS_TIME=$REQUESTS_TIME TIMEOUT=$TIMEOUT CURRENCIES_HOST=$CURRENCIES_HOST API_KEY=$API_KEY DB_USER=$DB_USER DB_PASSWORD=$DB_PASSWORD DB_NAME=$DB_NAME POSTGRES_PASSWORD=$DB_PASSWORD POSTGRES_USER=$DB_USER POSTGRES_DB=$DB_NAME docker compose up -d --build app"

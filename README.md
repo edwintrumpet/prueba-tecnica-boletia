@@ -7,6 +7,22 @@ App to know the historical behavior of currencies.
 Requirements
 
 - Go v1.20+
+- Docker
+- Docker compose
+
+Create the `.env` file to provide env variables for database
+
+```
+POSTGRES_PASSWORD=******
+POSTGRES_USER=******
+POSTGRES_DB=******
+```
+
+Run database using docker compose
+
+```bash
+docker-compose up -d
+```
 
 Create the `.vscode/launch.json` file to provide debug config and env variables
 
@@ -25,6 +41,9 @@ Create the `.vscode/launch.json` file to provide debug config and env variables
                 "TIMEOUT": "30",
                 "CURRENCIES_HOST": "https://api.currencyapi.com/v3/latest",
                 "API_KEY": "******",
+                "DB_USER": "******",
+                "DB_PASSWORD": "******",
+                "DB_NAME": "******",
             }
         }
     ]
@@ -35,14 +54,19 @@ To run press **`F5`** or use the debug icon on Visual Studio Code
 
 ### Run using Docker
 
-Create the `.env` file to provide env variables
+Add next lines to the `.env` file to provide env variables
 
 ```
 REQUESTS_TIME=480
 TIMEOUT=30
 CURRENCIES_HOST=https://api.currencyapi.com/v3/latest
 API_KEY=******
+DB_USER=******
+DB_PASSWORD=******
+DB_NAME=******
 ```
+
+Enable commented lines on `docker-compose.yaml` file
 
 Run
 
