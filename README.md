@@ -55,3 +55,17 @@ Watch app logs
 ```bash
 docker-compose logs -f app
 ```
+
+## Tests
+
+Run tests
+
+```bash
+go test -v ./...
+```
+
+Watch coverage
+
+```bash
+go test ./... -coverprofile cover.out && go tool cover -func cover.out
+```

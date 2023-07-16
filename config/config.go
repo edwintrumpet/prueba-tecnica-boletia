@@ -18,3 +18,12 @@ func New() error {
 
 	return nil
 }
+
+func NewMock(requestTime, timeout int, currenciesHost string) {
+	Get = config{
+		RequestsTime:   1,
+		Timeout:        30,
+		CurrenciesHost: currenciesHost,
+		ApiKey:         "api-key",
+	}
+}

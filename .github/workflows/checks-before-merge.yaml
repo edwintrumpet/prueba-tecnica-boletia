@@ -1,0 +1,29 @@
+name: checks before merge
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v3
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+        cache: false
+    - name: check linter
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.53
+    - name: run tests
+      run: go test -v ./...
+    - name: check coverage
+      run: |
+          go test ./... -coverprofile cover.out &&
+          coverage=`go tool cover -func cover.out | grep total | awk '{print substr($3, 1, length($3)-3)}'` &&
+          if (($coverage < 70)); then exit 1; fi
