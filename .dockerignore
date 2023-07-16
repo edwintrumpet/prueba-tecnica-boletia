@@ -8,6 +8,8 @@
 Dockerfile
 docker-compose.yaml
 
+cover.out
+
 .env
 
 README.md
