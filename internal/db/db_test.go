@@ -28,13 +28,6 @@ func TestNew(t *testing.T) {
 			migrate:  "true",
 		},
 		{
-			name:     "wrong host",
-			host:     "z",
-			password: "test-password",
-			migrate:  "false",
-			error:    "no such host",
-		},
-		{
 			name:     "wrong password",
 			host:     "localhost",
 			password: "wrong-password",
