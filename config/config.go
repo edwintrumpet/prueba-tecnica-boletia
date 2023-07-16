@@ -50,7 +50,7 @@ func NewMock(requestTime, timeout int, currenciesHost string) {
 			User:     "test-user",
 			Password: "test-password",
 			Name:     "test_boletia_db",
-			Host:     "localhost",
+			Host:     "postgres",
 			Port:     "5433",
 			SSLMode:  "disable",
 			Migrate:  true,
