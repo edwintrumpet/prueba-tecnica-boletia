@@ -11,5 +11,5 @@ func TestNew(t *testing.T) {
 	config.NewMock(1, 1, "")
 
 	err := New()
-	assert.Error(t, err)
+	assert.NoError(t, err)
 }
