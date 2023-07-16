@@ -14,7 +14,7 @@ import (
 
 func TestStart(t *testing.T) {
 	mockUrl := "example.com"
-	config.NewMock(1, 10, mockUrl)
+	config.NewMock(1, 10, mockUrl, "", "", "")
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

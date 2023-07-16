@@ -5,5 +5,11 @@ services:
       - POSTGRES_PASSWORD=test-password
       - POSTGRES_USER=test-user
       - POSTGRES_DB=test_boletia_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
-      - 5433:5432
+      - 5432:5432
