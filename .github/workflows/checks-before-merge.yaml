@@ -1,4 +1,4 @@
-name: tests before merging to main
+name: checks before merge
 
 on:
   pull_request:
