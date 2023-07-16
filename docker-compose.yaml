@@ -1,6 +1,14 @@
 services:
-  app:
-    build:
-      context: .
+  # app:
+  #   build:
+  #     context: .
+  #   env_file:
+  #     - .env
+  db:
+    image: postgres
     env_file:
       - .env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

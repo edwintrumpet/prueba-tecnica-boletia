@@ -61,7 +61,7 @@ docker-compose logs -f app
 Run tests
 
 ```bash
-go test -v ./...
+docker-compose -f docker-compose.test.yaml up -d && go test -v ./... ; docker-compose down
 ```
 
 Watch coverage

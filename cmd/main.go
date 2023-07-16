@@ -1,11 +1,10 @@
 package main
 
 import (
-	"context"
 	"log"
 
 	"github.com/edwintrumpet/prueba-tecnica-boletia/config"
-	"github.com/edwintrumpet/prueba-tecnica-boletia/pkg/requester"
+	"github.com/edwintrumpet/prueba-tecnica-boletia/internal/db"
 )
 
 func main() {
@@ -13,5 +12,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	requester.Start(context.Background())
+	if err := db.New(); err != nil {
+		log.Fatal(err)
+	}
+
+	// requester.Start(context.Background())
 }
