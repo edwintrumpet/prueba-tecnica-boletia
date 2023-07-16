@@ -7,9 +7,11 @@
 .dockerignore
 Dockerfile
 docker-compose.yaml
+docker-compose.test.yaml
 
 cover.out
 
 .env
+pgdata
 
 README.md

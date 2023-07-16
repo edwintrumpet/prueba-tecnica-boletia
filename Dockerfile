@@ -10,5 +10,6 @@ FROM alpine
 
 WORKDIR /usr/src/app
 COPY --from=builder ["/usr/src/app/bin/app", "/usr/src/app/"]
+COPY --from=builder ["/usr/src/app/internal/db/migrations", "/usr/src/app/internal/db/migrations"]
 
 CMD ["./app"]
