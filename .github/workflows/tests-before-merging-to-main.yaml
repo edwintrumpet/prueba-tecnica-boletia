@@ -25,5 +25,5 @@ jobs:
     - name: check coverage
       run: |
           go test ./... -coverprofile cover.out &&
-          coverage=`go tool cover -func cover.out | grep total | awk '{print substr($3, 1, length($3)-2)}'` &&
+          coverage=`go tool cover -func cover.out | grep total | awk '{print substr($3, 1, length($3)-3)}'` &&
           if (($coverage <= 90)); then exit 1; fi
