@@ -1,0 +1,43 @@
+name: build and deploy
+
+on:
+  create:
+    tags: "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v3
+    - name: build the docker image
+      run: docker build -t $DOCKER_USERNAME/boletia-currencies:${GITHUB_REF_NAME:1} .
+    - name: login docker hub
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - name: push docker image
+      run: docker push $DOCKER_USERNAME/boletia-currencies:${GITHUB_REF_NAME:1}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ vars.HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      REQUESTS_TIME: ${{ vars.REQUESTS_TIME }}
+      TIMEOUT: ${{ vars.TIMEOUT }}
+      CURRENCIES_HOST: ${{ vars.CURRENCIES_HOST }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      API_KEY: ${{ secrets.API_KEY }}
+    steps:
+    - name: set ssh key
+      run: |
+          mkdir ~/.ssh &&
+          echo "$SSH_KEY" > ~/.ssh/key.pem &&
+          chmod 400 ~/.ssh/key.pem &&
+          ssh-keyscan -t rsa $HOST >> ~/.ssh/known_hosts
+    - name: deploy
+      run: |
+          ssh -i ~/.ssh/key.pem $DEPLOY_USER@$HOST "cd ~/app && VERSION=${GITHUB_REF_NAME:1} REQUESTS_TIME=$REQUESTS_TIME TIMEOUT=$TIMEOUT CURRENCIES_HOST=$CURRENCIES_HOST API_KEY=$API_KEY docker compose up -d --build app"

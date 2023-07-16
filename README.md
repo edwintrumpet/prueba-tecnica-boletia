@@ -69,3 +69,35 @@ Watch coverage
 ```bash
 go test ./... -coverprofile cover.out && go tool cover -func cover.out
 ```
+
+## Deploy
+
+Create a git tag using semantic version
+
+```bash
+git tag -a v0.0.1 -m "message"
+```
+
+Push tag to GitHub
+
+```bash
+git push --tags
+```
+
+To see all versions visit [Docker Hub repository](https://hub.docker.com/repository/docker/edwincoding/boletia-currencies/)
+
+## To remove a version
+
+Delete tag on [Docker Hub repository](https://hub.docker.com/repository/docker/edwincoding/boletia-currencies/)
+
+Remove tag from GitHub
+
+```bash
+git push --delete origin v0.0.1
+```
+
+Remove tag from local repository
+
+```bash
+git tag --delete v0.0.1
+```
