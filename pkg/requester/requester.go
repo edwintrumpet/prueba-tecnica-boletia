@@ -148,7 +148,6 @@ func makeRequest(c *http.Client, req *http.Request, currencies db.CurrencyRepo, 
 			"errorMsg":       request.ErrorMsg,
 			"stack":          merry.Stacktrace(err),
 		}).Error(err)
-		tx.Rollback()
 		return
 	}
 
@@ -161,7 +160,6 @@ func makeRequest(c *http.Client, req *http.Request, currencies db.CurrencyRepo, 
 			"errorMsg":       request.ErrorMsg,
 			"stack":          merry.Stacktrace(err),
 		}).Error(err)
-		tx.Rollback()
 		return
 	}
 
@@ -186,7 +184,6 @@ func makeRequest(c *http.Client, req *http.Request, currencies db.CurrencyRepo, 
 			"errorMsg":       request.ErrorMsg,
 			"stack":          merry.Stacktrace(err),
 		}).Error(err)
-		tx.Rollback()
 		return
 	}
 
@@ -200,7 +197,6 @@ func makeRequest(c *http.Client, req *http.Request, currencies db.CurrencyRepo, 
 			"errorMsg":       request.ErrorMsg,
 			"stack":          merry.Stacktrace(err),
 		}).Error(err)
-		tx.Rollback()
 		return
 	}
 
