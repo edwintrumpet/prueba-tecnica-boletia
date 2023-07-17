@@ -24,9 +24,14 @@ type requestRepo struct {
 }
 
 type RequestRepo interface {
-	Begin() (*goqu.TxDatabase, error)
+	Begin() (Tx, error)
 	Create(data Request) (*Request, error)
-	CreateWithTx(data Request, tx *goqu.TxDatabase) (*Request, error)
+	CreateWithTx(data Request, tx Tx) (*Request, error)
+}
+
+type Tx interface {
+	Commit() error
+	Insert(table interface{}) *goqu.InsertDataset
 }
 
 func NewRequestRepo(db *goqu.Database) RequestRepo {
@@ -36,7 +41,7 @@ func NewRequestRepo(db *goqu.Database) RequestRepo {
 	}
 }
 
-func (r *requestRepo) Begin() (*goqu.TxDatabase, error) {
+func (r *requestRepo) Begin() (Tx, error) {
 	return r.db.Begin()
 }
 
@@ -69,7 +74,7 @@ func (r *requestRepo) Create(data Request) (*Request, error) {
 	return created, nil
 }
 
-func (r *requestRepo) CreateWithTx(data Request, tx *goqu.TxDatabase) (*Request, error) {
+func (r *requestRepo) CreateWithTx(data Request, tx Tx) (*Request, error) {
 	created := new(Request)
 
 	ok, err := tx.Insert(r.table).Cols(

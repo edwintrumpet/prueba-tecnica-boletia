@@ -25,7 +25,7 @@ type currencyRepo struct {
 }
 
 type CurrencyRepo interface {
-	Create(data []SaveCurrency, tx *goqu.TxDatabase) (bool, error)
+	Create(data []SaveCurrency, tx Tx) (bool, error)
 }
 
 func NewCurrencyRepo(db *goqu.Database) CurrencyRepo {
@@ -35,7 +35,7 @@ func NewCurrencyRepo(db *goqu.Database) CurrencyRepo {
 	}
 }
 
-func (r *currencyRepo) Create(data []SaveCurrency, tx *goqu.TxDatabase) (bool, error) {
+func (r *currencyRepo) Create(data []SaveCurrency, tx Tx) (bool, error) {
 	res, err := tx.Insert(r.table).
 		Rows(data).
 		Returning("*").

@@ -4,11 +4,11 @@
     },
     "data": {
         "COP": {
-            "code": "USD",
+            "code": "COP",
             "value": 4080.0095483066
         },
         "MXN": {
-            "code": "USD",
+            "code": "MXN",
             "value": 16.7513508952
         },
         "USD": {
