@@ -7,6 +7,7 @@ import (
 	"path"
 	"runtime"
 
+	"github.com/ansel1/merry"
 	"github.com/doug-martin/goqu/v9"
 	"github.com/edwintrumpet/prueba-tecnica-boletia/config"
 	"github.com/golang-migrate/migrate/v4"
@@ -15,25 +16,21 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var DB *goqu.Database
-
-func New() error {
+func New() (*goqu.Database, error) {
 	if err := doMigration(); err != nil {
-		return err
+		return nil, merry.Wrap(err)
 	}
 
-	d, err := sql.Open("postgres", config.DBdsn())
+	db, err := sql.Open("postgres", config.DBdsn())
 	if err != nil {
-		return err
+		return nil, merry.Wrap(err)
 	}
 
-	if err := d.Ping(); err != nil {
-		return err
+	if err := db.Ping(); err != nil {
+		return nil, merry.Wrap(err)
 	}
 
-	DB = goqu.New("postgres", d)
-
-	return nil
+	return goqu.New("postgres", db), nil
 }
 
 func doMigration() error {
@@ -43,13 +40,13 @@ func doMigration() error {
 
 	db, err := sql.Open("postgres", config.DBdsn())
 	if err != nil {
-		return err
+		return merry.Wrap(err)
 	}
 	defer db.Close()
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 	if err != nil {
-		return err
+		return merry.Wrap(err)
 	}
 	defer driver.Close()
 
@@ -59,11 +56,11 @@ func doMigration() error {
 		driver,
 	)
 	if err != nil {
-		return err
+		return merry.Wrap(err)
 	}
 
 	if err := m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		return err
+		return merry.Wrap(err)
 	}
 
 	return nil

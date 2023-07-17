@@ -36,7 +36,7 @@ func TestStart(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*2)
 	defer cancel()
 
-	Start(ctx)
+	Start(ctx, nil, nil)
 
 	calls := httpmock.GetTotalCallCount()
 

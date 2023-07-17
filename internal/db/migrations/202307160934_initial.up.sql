@@ -4,15 +4,15 @@ CREATE TABLE requests (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     requested_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     last_updated_at TIMESTAMP WITHOUT TIME ZONE,
-    request_duration SMALLINT NOT NULL,
-    response_status SMALLINT,
+    request_duration DECIMAL NOT NULL,
+    response_status VARCHAR(3),
     is_ok BOOLEAN NOT NULL,
     error_msg TEXT
 );
 
 CREATE TABLE currencies (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    code VARCHAR(3) NOT NULL,
+    code VARCHAR(5) NOT NULL,
     value DOUBLE PRECISION NOT NULL,
     request_id uuid NOT NULL,
 
