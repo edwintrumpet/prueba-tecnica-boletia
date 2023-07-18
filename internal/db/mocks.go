@@ -26,13 +26,29 @@ func (m *MockRequestsRepo) Begin() (Tx, error) {
 func (m *MockRequestsRepo) Create(data Request) (*Request, error) {
 	args := m.Called(data)
 
-	return args.Get(0).(*Request), args.Error(1)
+	var res *Request
+	arg0 := args.Get(0)
+	if arg0 == nil {
+		res = nil
+	} else {
+		res = arg0.(*Request)
+	}
+
+	return res, args.Error(1)
 }
 
 func (m *MockRequestsRepo) CreateWithTx(data Request, tx Tx) (*Request, error) {
 	args := m.Called(data, tx)
 
-	return args.Get(0).(*Request), args.Error(1)
+	var res *Request
+	arg0 := args.Get(0)
+	if arg0 == nil {
+		res = nil
+	} else {
+		res = arg0.(*Request)
+	}
+
+	return res, args.Error(1)
 }
 
 func (m *MockCurrenciesRepo) Create(data []SaveCurrency, tx Tx) (bool, error) {

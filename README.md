@@ -91,13 +91,13 @@ docker-compose -f docker-compose.test.yaml up -d && sleep 5 && go test -v ./... 
 Watch coverage
 
 ```bash
-docker-compose -f docker-compose.test.yaml up -d && sleep 5 && go test ./... -coverprofile cover.out && go tool cover -func cover.out ; docker-compose down
+rm cover.out ; docker-compose -f docker-compose.test.yaml up -d && sleep 5 && go test ./... -coverprofile cover.out && go tool cover -func cover.out ; docker-compose down
 ```
 
 Watch coverage in html
 
 ```bash
-docker-compose -f docker-compose.test.yaml up -d && sleep 5 && go test ./... -coverprofile cover.out && go tool cover -html=cover.out ; docker-compose down
+rm cover.out ; docker-compose -f docker-compose.test.yaml up -d && sleep 5 && go test ./... -coverprofile cover.out && go tool cover -html=cover.out ; docker-compose down
 ```
 
 ## Deploy
