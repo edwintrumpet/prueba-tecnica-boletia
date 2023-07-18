@@ -64,11 +64,94 @@ func TestCreateCurrencies(t *testing.T) {
 		})
 	}
 }
+
+func TestFindCurrencies(t *testing.T) {
+	repo, tx, requestId, err := databasePreparationForCurrenciesTest(t)
+	assert.NoError(t, err)
+
+	ok, err := repo.Create([]SaveCurrency{
+		{
+			Code:      "COP",
+			Value:     4005.28,
+			RequestID: requestId,
+		},
+		{
+			Code:      "MXN",
+			Value:     16.75,
+			RequestID: requestId,
+		},
+		{
+			Code:      "USD",
+			Value:     1.02,
+			RequestID: requestId,
+		},
+	}, tx)
+	assert.NoError(t, err)
+	assert.True(t, ok)
+
+	err = tx.Commit()
+	assert.NoError(t, err)
+
+	pastTime, err := time.Parse(time.RFC3339, "2023-07-18T20:15:00Z")
+	assert.NoError(t, err)
+
+	futureTime := time.Now().Add(time.Hour * 1)
+
+	testCases := [...]struct {
+		name  string
+		req   FindCurrenciesRequest
+		len   int
+		error string
+	}{
+		{
+			name: "list COP",
+			req: FindCurrenciesRequest{
+				Code: "COP",
+			},
+			len: 1,
+		},
+		{
+			name: "list all",
+			req:  FindCurrenciesRequest{},
+			len:  3,
+		},
+		{
+			name: "list in the past",
+			req: FindCurrenciesRequest{
+				Fend: &pastTime,
+			},
+			len: 0,
+		},
+		{
+			name: "list in the future",
+			req: FindCurrenciesRequest{
+				Finit: &futureTime,
+			},
+			len: 0,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			res, err := repo.Find(tc.req)
+			if err != nil {
+				assert.NotEmpty(t, tc.error)
+				assert.ErrorContains(t, err, tc.error)
+				return
+			}
+
+			assert.Empty(t, tc.error)
+
+			assert.Len(t, res, tc.len)
+		})
+	}
+}
+
 func databasePreparationForCurrenciesTest(t *testing.T) (CurrencyRepo, Tx, string, error) {
 	err := config.NewMock(1, 1, "", "test-password", "localhost", "true")
 	assert.NoError(t, err)
 
-	db, err := New()
+	db, err := NewMockDB()
 	assert.NoError(t, err)
 
 	currenciesRepo := NewCurrencyRepo(db)

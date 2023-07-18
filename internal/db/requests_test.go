@@ -103,7 +103,7 @@ func databasePreparationForRequestsTest(t *testing.T) RequestRepo {
 	err := config.NewMock(1, 1, "", "test-password", "localhost", "true")
 	assert.NoError(t, err)
 
-	db, err := New()
+	db, err := NewMockDB()
 	assert.NoError(t, err)
 
 	return NewRequestRepo(db)
