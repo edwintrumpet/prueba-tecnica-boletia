@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 
+	"github.com/ansel1/merry"
 	"github.com/caarlos0/env/v9"
 )
 
@@ -26,7 +27,7 @@ var Get config
 
 func New() error {
 	if err := env.Parse(&Get); err != nil {
-		return err
+		return merry.Wrap(err)
 	}
 
 	return nil
@@ -47,7 +48,7 @@ func NewMock(requestTime, timeout int, currenciesHost, dbPassword, dbHost, dbMig
 		},
 	})
 
-	return err
+	return merry.Wrap(err)
 }
 
 func DBdsn() string {

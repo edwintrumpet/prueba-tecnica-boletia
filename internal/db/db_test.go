@@ -41,7 +41,7 @@ func TestNew(t *testing.T) {
 			err := config.NewMock(1, 1, "", tc.password, tc.host, tc.migrate)
 			assert.NoError(t, err)
 
-			err = New()
+			_, err = New()
 			if err != nil {
 				assert.NotEmpty(t, tc.error)
 				assert.ErrorContains(t, err, tc.error)
