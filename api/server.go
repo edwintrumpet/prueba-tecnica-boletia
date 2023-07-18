@@ -74,5 +74,6 @@ func httpErrorHandler(err error, c echo.Context) {
 		"error":       err.Error(),
 	}).Info("api error")
 
+	// nolint:all
 	c.JSON(statusCode, ErrorResponse{Error: userMessage})
 }
