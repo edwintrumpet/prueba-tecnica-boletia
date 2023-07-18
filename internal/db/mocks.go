@@ -57,6 +57,12 @@ func (m *MockCurrenciesRepo) Create(data []SaveCurrency, tx Tx) (bool, error) {
 	return args.Bool(0), args.Error(1)
 }
 
+func (m *MockCurrenciesRepo) Find(req FindCurrenciesRequest) ([]FindCurrenciesResponse, error) {
+	args := m.Called(req)
+
+	return args.Get(0).([]FindCurrenciesResponse), args.Error(1)
+}
+
 func (m *MockTx) Commit() error {
 	args := m.Called()
 

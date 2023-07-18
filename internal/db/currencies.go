@@ -1,6 +1,8 @@
 package db
 
 import (
+	"time"
+
 	"github.com/ansel1/merry"
 	"github.com/doug-martin/goqu/v9"
 	"github.com/doug-martin/goqu/v9/exp"
@@ -19,6 +21,20 @@ type SaveCurrency struct {
 	RequestID string  `json:"requestId" db:"request_id"`
 }
 
+type FindCurrenciesRequest struct {
+	Code  string     `json:"code"`
+	Finit *time.Time `json:"finit"`
+	Fend  *time.Time `json:"fend"`
+}
+
+type FindCurrenciesResponse struct {
+	Code            string    `json:"code" db:"code"`
+	Value           float64   `json:"value" db:"value"`
+	RequestedAt     time.Time `json:"requestedAt" db:"requested_at"`
+	LastUpdatedAt   time.Time `json:"lastUpdatedAt" db:"last_updated_at"`
+	RequestDuration float64   `json:"requestDuration" db:"request_duration"`
+}
+
 type currencyRepo struct {
 	db    *goqu.Database
 	table exp.IdentifierExpression
@@ -26,6 +42,7 @@ type currencyRepo struct {
 
 type CurrencyRepo interface {
 	Create(data []SaveCurrency, tx Tx) (bool, error)
+	Find(req FindCurrenciesRequest) ([]FindCurrenciesResponse, error)
 }
 
 func NewCurrencyRepo(db *goqu.Database) CurrencyRepo {
@@ -54,4 +71,39 @@ func (r *currencyRepo) Create(data []SaveCurrency, tx Tx) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (r *currencyRepo) Find(req FindCurrenciesRequest) ([]FindCurrenciesResponse, error) {
+	res := []FindCurrenciesResponse{}
+
+	q := r.db.From(r.table).
+		Select(
+			"currencies.code",
+			"currencies.value",
+			"requests.requested_at",
+			"requests.last_updated_at",
+			"requests.request_duration",
+		).
+		LeftJoin(goqu.T("requests"), goqu.On(goqu.Ex{"currencies.request_id": goqu.I("requests.id")}))
+
+	if req.Code != "" {
+		q = q.Where(goqu.C("code").Eq(req.Code))
+	}
+
+	if req.Finit != nil {
+		q = q.Where(goqu.C("requested_at").Gt(*req.Finit))
+	}
+
+	if req.Fend != nil {
+		q = q.Where(goqu.C("requested_at").Lt(*req.Fend))
+	}
+
+	err := q.Order(goqu.I("requests.requested_at").Desc(), goqu.I("currencies.code").Asc()).
+		Executor().
+		ScanStructs(&res)
+	if err != nil {
+		return nil, merry.Wrap(err)
+	}
+
+	return res, nil
 }

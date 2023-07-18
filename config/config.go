@@ -12,6 +12,7 @@ type config struct {
 	Timeout        int    `env:"TIMEOUT,required"`
 	CurrenciesHost string `env:"CURRENCIES_HOST,required"`
 	ApiKey         string `env:"API_KEY,required"`
+	Port           int    `env:"PORT" envDefault:"3000"`
 	DB             struct {
 		User     string `env:"DB_USER,required"`
 		Password string `env:"DB_PASSWORD,required"`
@@ -61,4 +62,8 @@ func DBdsn() string {
 		Get.DB.Port,
 		Get.DB.SSLMode,
 	)
+}
+
+func Port() string {
+	return fmt.Sprintf(":%d", Get.Port)
 }
