@@ -50,16 +50,6 @@ func TestStartSuccess(t *testing.T) {
 			Value:     4080.0095483066,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
 	}, mock.Anything).Return(true, nil)
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*2)
@@ -75,16 +65,6 @@ func TestStartSuccess(t *testing.T) {
 		{
 			Code:      "COP",
 			Value:     4080.0095483066,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
 	}, mock.Anything)
@@ -347,16 +327,6 @@ func TestStartErrorCreatingCurrency(t *testing.T) {
 			Value:     4080.0095483066,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
 	}, mock.Anything).Return(false, errors.New("test error"))
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*2)
@@ -372,16 +342,6 @@ func TestStartErrorCreatingCurrency(t *testing.T) {
 		{
 			Code:      "COP",
 			Value:     4080.0095483066,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
 	}, mock.Anything)
@@ -425,16 +385,6 @@ func TestStartCurrenciesNotSaved(t *testing.T) {
 			Value:     4080.0095483066,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
 	}, mock.Anything).Return(false, nil)
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*2)
@@ -450,16 +400,6 @@ func TestStartCurrenciesNotSaved(t *testing.T) {
 		{
 			Code:      "COP",
 			Value:     4080.0095483066,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
 	}, mock.Anything)
@@ -501,16 +441,6 @@ func TestStartErrorOnCommit(t *testing.T) {
 			Value:     4080.0095483066,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
 	}, mock.Anything).Return(true, nil)
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*2)
@@ -526,16 +456,6 @@ func TestStartErrorOnCommit(t *testing.T) {
 		{
 			Code:      "COP",
 			Value:     4080.0095483066,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "MXN",
-			Value:     16.7513508952,
-			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
-		},
-		{
-			Code:      "USD",
-			Value:     1.000002931,
 			RequestID: "ec4b371a-379d-4a8d-bfdd-2c933fce0267",
 		},
 	}, mock.Anything)
