@@ -60,7 +60,15 @@ func (m *MockCurrenciesRepo) Create(data []SaveCurrency, tx Tx) (bool, error) {
 func (m *MockCurrenciesRepo) Find(req FindCurrenciesRequest) ([]FindCurrenciesResponse, error) {
 	args := m.Called(req)
 
-	return args.Get(0).([]FindCurrenciesResponse), args.Error(1)
+	var res []FindCurrenciesResponse
+	arg0 := args.Get(0)
+	if arg0 == nil {
+		res = nil
+	} else {
+		res = arg0.([]FindCurrenciesResponse)
+	}
+
+	return res, args.Error(1)
 }
 
 func (m *MockTx) Commit() error {
