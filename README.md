@@ -116,6 +116,42 @@ git push --tags
 
 To see all versions visit [Docker Hub repository](https://hub.docker.com/repository/docker/edwincoding/boletia-currencies/)
 
+The server must have the next `docker-file.yaml`
+
+```yaml
+services:
+  app:
+    image: edwincoding/boletia-currencies:$VERSION
+    environment:
+      - VERSION
+      - REQUESTS_TIME
+      - TIMEOUT
+      - CURRENCIES_HOST
+      - API_KEY
+      - DB_USER
+      - DB_PASSWORD
+      - DB_NAME
+      - DB_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 80:3000
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+```
+
 ## To remove a version
 
 Delete tag on [Docker Hub repository](https://hub.docker.com/repository/docker/edwincoding/boletia-currencies/)

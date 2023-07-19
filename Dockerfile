@@ -12,4 +12,5 @@ WORKDIR /usr/src/app
 COPY --from=builder ["/usr/src/app/bin/app", "/usr/src/app/"]
 COPY --from=builder ["/usr/src/app/internal/db/migrations", "/usr/src/app/internal/db/migrations"]
 
+EXPOSE 3000
 CMD ["./app"]
