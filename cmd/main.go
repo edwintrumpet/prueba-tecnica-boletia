@@ -6,9 +6,9 @@ import (
 
 	"github.com/edwintrumpet/prueba-tecnica-boletia/api"
 	"github.com/edwintrumpet/prueba-tecnica-boletia/config"
+	"github.com/edwintrumpet/prueba-tecnica-boletia/internal/currencies"
 	"github.com/edwintrumpet/prueba-tecnica-boletia/internal/db"
-	"github.com/edwintrumpet/prueba-tecnica-boletia/pkg/currencies"
-	"github.com/edwintrumpet/prueba-tecnica-boletia/pkg/requester"
+	"github.com/edwintrumpet/prueba-tecnica-boletia/internal/requester"
 	"github.com/sirupsen/logrus"
 )
 
