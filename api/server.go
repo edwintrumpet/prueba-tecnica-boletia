@@ -5,7 +5,7 @@ import (
 
 	"github.com/ansel1/merry"
 	"github.com/edwintrumpet/prueba-tecnica-boletia/config"
-	"github.com/edwintrumpet/prueba-tecnica-boletia/pkg/currencies"
+	"github.com/edwintrumpet/prueba-tecnica-boletia/internal/currencies"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
