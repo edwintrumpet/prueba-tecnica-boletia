@@ -71,3 +71,49 @@ func migrationsFile() string {
 	migrationsURL := path.Join(path.Dir(filename), "migrations")
 	return fmt.Sprintf("file://%s", migrationsURL)
 }
+
+func NewMockDB() (*goqu.Database, error) {
+	if err := resetDB(); err != nil {
+		return nil, merry.Wrap(err)
+	}
+
+	if err := doMigration(); err != nil {
+		return nil, merry.Wrap(err)
+	}
+
+	db, err := sql.Open("postgres", config.DBdsn())
+	if err != nil {
+		return nil, merry.Wrap(err)
+	}
+
+	return goqu.New("postgres", db), nil
+}
+
+func resetDB() error {
+	db, err := sql.Open("postgres", config.DBdsn())
+	if err != nil {
+		return merry.Wrap(err)
+	}
+	defer db.Close()
+
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		return merry.Wrap(err)
+	}
+	defer driver.Close()
+
+	m, err := migrate.NewWithDatabaseInstance(
+		migrationsFile(),
+		"postgres",
+		driver,
+	)
+	if err != nil {
+		return merry.Wrap(err)
+	}
+
+	if err := m.Drop(); err != nil {
+		return merry.Wrap(err)
+	}
+
+	return nil
+}
